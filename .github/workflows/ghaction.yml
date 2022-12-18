@@ -1,5 +1,8 @@
-name: publish
-on: [push]
+name: ghaction
+on:
+  pull_request:
+  push:
+    branches: master
 jobs:
   publish-toolbox-image:
     runs-on: ubuntu-latest
@@ -16,6 +19,7 @@ jobs:
       uses: ludeeus/action-shellcheck@master
 
     - name: Login to GitHub Container Registry
+      if: github.event_name == 'pull_request' && github.event.action == 'closed' && github.event.pull_request.merged == true
       uses: docker/login-action@v1
       with:
         registry: ghcr.io
@@ -23,6 +27,7 @@ jobs:
         password: ${{ secrets.GLOGAR_TOOLBOX }}
 
     - name: Build the toolbox Docker image
+      if: github.event_name == 'pull_request' && github.event.action == 'closed' && github.event.pull_request.merged == true
       run: |
         docker build . --tag ghcr.io/gregorlogar991/toolbox:latest
         docker run ghcr.io/gregorlogar991/toolbox:latest
