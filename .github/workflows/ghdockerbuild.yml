@@ -1,21 +1,15 @@
-name: publish
-on: [push]
+name: ghdockerbuild
+on:
+  pull_request:
 jobs:
   publish-toolbox-image:
     runs-on: ubuntu-latest
     steps:
+
     - uses: actions/checkout@v2
 
-    - name: DockerLint
-      uses: luke142367/Docker-Lint-Action@v1.0.0
-      with:
-        target: Dockerfile
-      env:
-        GITHUB_TOKEN: ${{ secrets.GLOGAR_TOOLBOX }}
-    - name: Shellcheck
-      uses: ludeeus/action-shellcheck@master
-
     - name: Login to GitHub Container Registry
+      if: github.event.pull_request.merged == true
       uses: docker/login-action@v1
       with:
         registry: ghcr.io
@@ -23,6 +17,7 @@ jobs:
         password: ${{ secrets.GLOGAR_TOOLBOX }}
 
     - name: Build the toolbox Docker image
+      if: github.event.pull_request.merged == true
       run: |
         docker build . --tag ghcr.io/gregorlogar991/toolbox:latest
         docker run ghcr.io/gregorlogar991/toolbox:latest
