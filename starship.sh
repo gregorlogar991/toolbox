@@ -101,7 +101,7 @@ download() {
   info "If you would like to see a build for your configuration,"
   info "please create an issue requesting a build for ${MAGENTA}${TARGET}${NO_COLOR}:"
   info "${BOLD}${UNDERLINE}https://github.com/starship/starship/issues/new/${NO_COLOR}"
-  return $rc
+  return "$rc"
 }
 
 unpack() {
