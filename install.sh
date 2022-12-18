@@ -7,7 +7,7 @@ apt-get upgrade -y
 apt-get install -y ca-certificates vim dnsutils strace ngrep htop ncdu git dstat net-tools curl wget iputils-ping tar unzip zip software-properties-common golang-go sudo exa bat
 
 
-ARCH=`uname -m`
+ARCH=$(uname -m)
 if [ "$ARCH" == "x86_64" ]; then
     TF_ARCH="linux_amd64"
 elif [ "$ARCH" == "aarch64" ]; then
@@ -18,11 +18,11 @@ else
 fi
 
 #TF
-TER_VER=`curl -s https://api.github.com/repos/hashicorp/terraform/releases/latest | grep tag_name | cut -d: -f2 | tr -d \"\,\v | awk '{$1=$1};1'`
-wget https://releases.hashicorp.com/terraform/${TER_VER}/terraform_${TER_VER}_${TF_ARCH}.zip
+TER_VER=$(curl -s https://api.github.com/repos/hashicorp/terraform/releases/latest | grep tag_name | cut -d: -f2 | tr -d \"\,v | awk '{$1=$1};1')
+wget "https://releases.hashicorp.com/terraform/${TER_VER}/terraform_${TER_VER}_${TF_ARCH}.zip"
 #TFNEV
 git clone --depth=1 https://github.com/tfutils/tfenv.git ~/.tfenv
-echo 'export PATH=$PATH:$HOME/.tfenv/bin' >> ~/.bashrc
+echo "export PATH=$PATH:$HOME/.tfenv/bin" >> ~/.bashrc
 #KUBECTL
 sudo curl -fsSLo /etc/apt/keyrings/kubernetes-archive-keyring.gpg https://packages.cloud.google.com/apt/doc/apt-key.gpg
 echo "deb [signed-by=/etc/apt/keyrings/kubernetes-archive-keyring.gpg] https://apt.kubernetes.io/ kubernetes-xenial main" | sudo tee /etc/apt/sources.list.d/kubernetes.list
@@ -33,7 +33,7 @@ apt-get clean
 
 if [ -e /usr/local/bin/starship.sh ]; then
     sh /usr/local/bin/starship.sh --yes
-    echo 'eval "$(starship init bash)"' >> ~/.bashrc
+    echo "eval \"$(starship init bash)\"" >> ~/.bashrc
 fi
 
 git clone https://github.com/gregorlogar991/dot-files.git /tmp/dot-files
