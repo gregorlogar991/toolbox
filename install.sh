@@ -28,6 +28,10 @@ sudo curl -fsSLo /etc/apt/keyrings/kubernetes-archive-keyring.gpg https://packag
 echo "deb [signed-by=/etc/apt/keyrings/kubernetes-archive-keyring.gpg] https://apt.kubernetes.io/ kubernetes-xenial main" | sudo tee /etc/apt/sources.list.d/kubernetes.list
 apt-get update
 apt-get install -y kubectl
+#ANSIBLE
+apt-add-repository ppa:ansible/ansible
+apt-get install -y ansible
+
 
 apt-get clean
 
