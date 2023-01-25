@@ -6,7 +6,6 @@ apt-get update
 apt-get upgrade -y
 apt-get install -y ca-certificates vim dnsutils strace ngrep htop ncdu git dstat net-tools curl wget iputils-ping tar unzip zip software-properties-common golang-go sudo exa bat
 
-
 ARCH=$(uname -m)
 if [ "$ARCH" == "x86_64" ]; then
     TF_ARCH="linux_amd64"
@@ -31,7 +30,6 @@ apt-get install -y kubectl
 #ANSIBLE
 apt-add-repository ppa:ansible/ansible
 apt-get install -y ansible
-
 
 apt-get clean
 
